@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.8/EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+
+ 
+	<!-- setter injection -->
+	<bean id="triangle" class="com.example.prezentareBogdan.Triangle"
+		scope="prototype">
+		<property name="type" value="echilateral" />
+		
+	</bean>
+
+
+	<!-- constructor injection -->
+	<bean id="triangle2" class="com.example.prezentareBogdan.Triangle">
+		<constructor-arg value="Echilateral" />
+		<constructor-arg value="20" />
+		<constructor-arg value="Isoscel" />
+	</bean>
+
+	<!-- constructor with multiple parameters -->
+	<bean id="triangle3" class="com.example.prezentareBogdan.Triangle">
+		<constructor-arg index="0" value="Echilateral" />
+		<constructor-arg index="1" value="20.3" />
+	</bean>
+
+	<!-- constructor with multiple parameters by Type -->
+	<bean id="triangle4" class="com.example.prezentareBogdan.Triangle">
+		<constructor-arg type="float" value="22.3" />
+		<constructor-arg type="java.lang.String"
+			value="Echilateral" />
+		<constructor-arg type="java.lang.String"
+			value="Isoscel" />
+	</bean>
+
+
+
+
+
+	<bean id="zeroPoint" class="com.example.exemplu2.Point">
+		<property name="x" value="0" />
+		<property name="y" value="0" />
+	</bean>
+
+	<bean id="pointB" class="com.example.exemplu2.Point">
+		<property name="x" value="1" />
+		<property name="y" value="3" />
+	</bean>
+	<bean id="pointC" class="com.example.exemplu2.Point">
+		<property name="x" value="2" />
+		<property name="y" value="2" />
+	</bean>
+
+
+	<!-- injecting beans objects -->
+	<bean id="triangle5" class="com.example.exemplu2.Triangle2">
+		<property name="zeroPoint" ref="zeroPoint" />
+		<property name="pointB" ref="pointB" />
+		<property name="pointC" ref="pointC" />
+	</bean>
+
+
+	<!-- injecting beans objects (inner beans) -->
+	<bean id="triangle6" class="com.example.exemplu2.Triangle2">
+		<property name="zeroPoint" ref="zeroPoint" />
+		<property name="pointB" ref="pointB" />
+		<property name="pointC">
+			<bean class="com.example.exemplu2.Point">
+				<property name="x" value="7" />
+				<property name="y" value="8" />
+			</bean>
+
+		</property>
+	</bean>
+
+
+
+
+	<!-- autowire (byName, byType, constructor) -->
+	
+	<bean id="triangle7" class="com.example.exemplu2.Triangle2"
+		autowire="byName">
+	</bean>
+
+
+	<bean id="triangleList" class="com.example.exemplu2.Triangle3"
+		scope="prototype">
+		<property name="points">
+			<list>
+				<ref bean="zeroPoint" />
+				<ref bean="pointB" />
+				<ref bean="pointC" />
+			</list>
+
+
+		</property>
+
+	</bean>
+
+
+	<bean id="parentTriangle" class="com.example.exemplu2.Triangle2">
+		<property name="zeroPoint" ref="zeroPoint" />
+	</bean>
+
+	<bean id="parentExample" class="com.example.exemplu2.Triangle2"
+		parent="parentTriangle">
+		
+		<property name="pointB" ref="pointB" />
+		<property name="pointC" ref="pointC" />
+	</bean>
+
+
+	<bean id="exempluConstructorDestructor"
+		class="com.example.exemplu2.Triangle4" autowire="byName"
+		init-method="myInt" destroy-method="cleanUp">
+	</bean>
+	
+	
+	<bean id = "beanPostProcess" class = "com.example.exemplu2.DisplayNameBeanPostProcessor">
+	</bean>
+	
+	<bean class = "com.example.exemplu2.MyBeanFactoryPostProcessor">
+	
+	</bean>
+
+
+
+
+
+
+</beans>
